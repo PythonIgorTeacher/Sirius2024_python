@@ -110,6 +110,7 @@ print(c.current_instance_number())
 print(c.show_total_instance_amount())
 
 
+
 ##Решение от Вадима Гутника
 # class TaxPayer:
 # def __init__(self, name, ITIN, balance):
