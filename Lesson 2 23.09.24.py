@@ -85,3 +85,5 @@ f = Fraction()
 f.num = 15#'числитель'
 f.den = 10
 print(f.simplify())
+
+
