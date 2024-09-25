@@ -111,21 +111,3 @@ print(c.show_total_instance_amount())
 
 
 
-##Решение от Вадима Гутника
-# class TaxPayer:
-# def __init__(self, name, ITIN, balance):
-# self.__name = name
-# self.__ITIN = ITIN
-# self.__balance = balance
-# def get_name(self):
-# print(f"Имя налогоплательщика: {self.__name}")
-# def set_name(self, name):
-# self.__name = name
-# def get_ITIN(self):
-# print(f"ИНН налогоплательщика: {self.__ITIN}")
-# def set_ITIN(self, ITIN):
-# self.__ITIN = ITIN
-# def get_balance(self):
-# print(f"Баланс налогоплательщика: {self.__balance}")
-# def set_balance(self, balance):
-# self.__balance = balance
