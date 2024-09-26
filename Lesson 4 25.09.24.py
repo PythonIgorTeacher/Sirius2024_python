@@ -146,7 +146,15 @@ class TikTakToe:
 
             self.player +=1
             break
-
+    def check_win(self):
+        if self.map[0] == self.map[1]==self.map[2] or\
+            self.map[3] == self.map[4] == self.map[5] or\
+            self.map[6] == self.map[7] == self.map[8] or\
+            self.map[0] == self.map[4] == self.map[8] or\
+            self.map[2] == self.map[4] == self.map[6]:
+            return f"Победил {'X' if (self.player+1) %2 ==0 else 'O'}"
+        else:
+            return False
     def draw_map(self):
         print(f"""_____________
 | {self.map[0]} | {self.map[1]} | {self.map[2]} |
@@ -159,6 +167,11 @@ _____________
 
 
 game = TikTakToe()
-game.new_turn()
-game.new_turn()
-game.draw_map()
+while True:
+    game.new_turn()
+    if game.check_win():  # проверка победы
+        print(game.check_win())
+        quit()
+
+
+#https://collabedit.com/eee2s
