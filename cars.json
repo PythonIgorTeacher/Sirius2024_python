@@ -1,0 +1,12 @@
+{
+    "Count_Of_Cars": 1,
+    "Car 1": {
+        "Brand": "Honda",
+        "Color": "red",
+        "Max_Speed": 150,
+        "Power_Of_Engine": 150,
+        "Volume_Of_Engine": 1,
+        "Type_Of_Body": "sedan",
+        "Clearance": 40
+    }
+}
