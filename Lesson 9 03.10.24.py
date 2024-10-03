@@ -85,65 +85,82 @@ from odbc import error
 # s.add_passengers(50)
 # s.seating_capacity()
 
+#
+# class Furniture:
+#      def __init__(self,name):
+#          self.name = name
+#
+# class PutInFurniture(Furniture):
+#     def __new__(cls, *args, **kwargs): #защитить себя от создания экземпляров
+#         if cls is PutInFurniture:
+#             raise TypeError(f'Нельзя создавать экземпляры класса {cls.__name__}')
+#         return object.__new__(cls)
+#
+#     def __init__(self, name):
+#         super().__init__(name)
+#         self.items_inside = list()
+#
+#     def put_inside(self, *items):
+#         for item in items:
+#             self.items_inside.append(item)
+#
+#
+# class PutOnFurniture(Furniture):
+#     def __new__(cls, *args, **kwargs): #защитить себя от создания экземпляров
+#         if cls is PutOnFurniture:
+#             raise TypeError(f'Нельзя создавать экземпляры класса {cls.__name__}')
+#         return object.__new__(cls)
+#
+#     def __init__(self, name):
+#         super().__init__(name)
+#         self.items_on_top = list()
+#
+#     def put_on_top(self, *items):
+#         for item in items:
+#             self.items_on_top.append(item)
+#
+#
+# class Table(PutOnFurniture):
+#     def __init__(self,name,leg_count):
+#         super().__init__(name)
+#         self.leg_count = leg_count
+#
+#     def hold_hot_pot(self):
+#         print('На стол поставили горячий чайник')
+#
+# class Shelf(PutInFurniture):
+#     def __init__(self,name, hanger_count):
+#         super().__init__(name)
+#         self.hanger_count = hanger_count
+#
+#     def put_on_hanger(self):
+#         print('На вешалку в шкафу повесили вещь')
+#
+# class Tumbochka(PutInFurniture, PutOnFurniture):
+#     def __init__(self,name, power_socket_count):
+#         super().__init__(name)
+#         self.power_socket_count = power_socket_count
+#
+#     def put_in_power_socket(self):
+#         print('В розетку тумбочки подключили устройство')
+#
+# new = Tumbochka('тумба у кровати',2)
+# new.put_on_top('Телефон','книга')
+# print(new.items_on_top)
 
-class Furniture:
-     def __init__(self,name):
-         self.name = name
 
-class PutInFurniture(Furniture):
-    def __new__(cls, *args, **kwargs): #защитить себя от создания экземпляров
-        if cls is PutInFurniture:
-            raise TypeError(f'Нельзя создавать экземпляры класса {cls.__name__}')
-        return object.__new__(cls)
+#Если возникает RecursionError -проблема с именем атрибута. Он должен быть приватным __
+class Demo:
+    def __init__(self,name):
+        self.__name = name #попробуйте убрать черточки у __name и увидите проблему
+    @property
+    def name(self):
+        return self.name
+    @name.setter
+    def name(self,new_name):
+        self.name = new_name
+    @name.deleter
+    def name(self):
+        self.name = None
 
-    def __init__(self, name):
-        super().__init__(name)
-        self.items_inside = list()
-
-    def put_inside(self, *items):
-        for item in items:
-            self.items_inside.append(item)
-
-
-class PutOnFurniture(Furniture):
-    def __new__(cls, *args, **kwargs): #защитить себя от создания экземпляров
-        if cls is PutOnFurniture:
-            raise TypeError(f'Нельзя создавать экземпляры класса {cls.__name__}')
-        return object.__new__(cls)
-
-    def __init__(self, name):
-        super().__init__(name)
-        self.items_on_top = list()
-
-    def put_on_top(self, *items):
-        for item in items:
-            self.items_on_top.append(item)
-
-
-class Table(PutOnFurniture):
-    def __init__(self,name,leg_count):
-        super().__init__(name)
-        self.leg_count = leg_count
-
-    def hold_hot_pot(self):
-        print('На стол поставили горячий чайник')
-
-class Shelf(PutInFurniture):
-    def __init__(self,name, hanger_count):
-        super().__init__(name)
-        self.hanger_count = hanger_count
-
-    def put_on_hanger(self):
-        print('На вешалку в шкафу повесили вещь')
-
-class Tumbochka(PutInFurniture, PutOnFurniture):
-    def __init__(self,name, power_socket_count):
-        super().__init__(name)
-        self.power_socket_count = power_socket_count
-
-    def put_in_power_socket(self):
-        print('В розетку тумбочки подключили устройство')
-
-new = Tumbochka('тумба у кровати',2)
-new.put_on_top('Телефон','книга')
-print(new.items_on_top)
+d = Demo('Новый')
