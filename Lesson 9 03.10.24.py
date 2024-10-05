@@ -86,23 +86,23 @@ from odbc import error
 # s.seating_capacity()
 
 #
-# class Furniture:
-#      def __init__(self,name):
-#          self.name = name
+class Furniture:
+     def __init__(self,name):
+         self.name = name
 #
-# class PutInFurniture(Furniture):
-#     def __new__(cls, *args, **kwargs): #защитить себя от создания экземпляров
-#         if cls is PutInFurniture:
-#             raise TypeError(f'Нельзя создавать экземпляры класса {cls.__name__}')
-#         return object.__new__(cls)
-#
-#     def __init__(self, name):
-#         super().__init__(name)
-#         self.items_inside = list()
-#
-#     def put_inside(self, *items):
-#         for item in items:
-#             self.items_inside.append(item)
+class PutInFurniture(Furniture):
+    def __new__(cls, *args, **kwargs): #защитить себя от создания экземпляров
+        if cls is PutInFurniture:
+            raise TypeError(f'Нельзя создавать экземпляры класса {cls.__name__}')
+        return object.__new__(cls)
+
+    def __init__(self, name):
+        super().__init__(name)
+        self.items_inside = list()
+
+    def put_inside(self, *items):
+        for item in items:
+            self.items_inside.append(item)
 #
 #
 # class PutOnFurniture(Furniture):
