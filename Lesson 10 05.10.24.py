@@ -64,71 +64,76 @@
 
 #https://refactoring.guru/ru/design-patterns/catalog
 
+#
+# from abc import ABC, abstractmethod
+# import abc
+# class AbstractNechto(abc.ABC):
+#     pass
+# class AbstractTable(ABC):
+#     @abstractmethod
+#     def has_legs(self): pass
+#     @abstractmethod
+#     def sit_on(self): pass
+# class AbstractChair(ABC):
+#     @abstractmethod
+#     def has_legs(self): pass
+#     @abstractmethod
+#     def sit_on(self): pass
+# class AbstractSofa(ABC):
+#     @abstractmethod
+#     def has_legs(self): pass
+#     @abstractmethod
+#     def sit_on(self): pass
+#
+# class AbstractFurnitureFactory(ABC):
+#     @abstractmethod
+#     def create_table(self): pass
+#     @abstractmethod
+#     def create_chair(self): pass
+#     @abstractmethod
+#     def create_sofa(self): pass
+#
+#
+# class CardoardFurnitureFactory(AbstractFurnitureFactory):
+#
+#     class CardboardTable(AbstractTable):
+#         def __init__(self,legs_count):
+#             self.legs_count = legs_count
+#         def has_legs(self):
+#             return self.legs_count > 0
+#         def sit_on(self):
+#             return f"Вы сели на {self.__class__.__name__}"
+#     class CardboardSofa(AbstractSofa):
+#         def __init__(self,legs_count):
+#             self.legs_count = legs_count
+#         def has_legs(self):
+#             return self.legs_count > 0
+#         def sit_on(self):
+#             return f"Вы сели на {self.__class__.__name__}"
+#     class CardboardChair(AbstractChair):
+#         def __init__(self,legs_count):
+#             self.legs_count = legs_count
+#         def has_legs(self):
+#             return self.legs_count > 0
+#         def sit_on(self):
+#             return f"Вы сели на {self.__class__.__name__}"
+#
+#
+#     def create_table(self, legs_count):
+#         table = CardoardFurnitureFactory.CardboardTable(legs_count)
+#         return table
+#
+#     def create_chair(self, legs_count):
+#         chair = CardoardFurnitureFactory.CardboardChair(legs_count)
+#         return chair
+#
+#     def create_sofa(self, legs_count):
+#         sofa = CardoardFurnitureFactory.CardboardSofa(legs_count)
+#         return sofa
+#
+# factory = CardoardFurnitureFactory()
+# table = factory.create_table(3)
+# chair = factory.create_chair(4)
+# print(chair.sit_on())
 
-from abc import ABC, abstractmethod
-class AbstractTable(ABC):
-    @abstractmethod
-    def has_legs(self): pass
-    @abstractmethod
-    def sit_on(self): pass
-class AbstractChair(ABC):
-    @abstractmethod
-    def has_legs(self): pass
-    @abstractmethod
-    def sit_on(self): pass
-class AbstractSofa(ABC):
-    @abstractmethod
-    def has_legs(self): pass
-    @abstractmethod
-    def sit_on(self): pass
 
-class AbstractFurnitureFactory(ABC):
-    @abstractmethod
-    def create_table(self): pass
-    @abstractmethod
-    def create_chair(self): pass
-    @abstractmethod
-    def create_sofa(self): pass
-
-
-class CardoardFurnitureFactory(AbstractFurnitureFactory):
-
-    class CardboardTable(AbstractTable):
-        def __init__(self,legs_count):
-            self.legs_count = legs_count
-        def has_legs(self):
-            return self.legs_count > 0
-        def sit_on(self):
-            return f"Вы сели на {self.__class__.__name__}"
-    class CardboardSofa(AbstractSofa):
-        def __init__(self,legs_count):
-            self.legs_count = legs_count
-        def has_legs(self):
-            return self.legs_count > 0
-        def sit_on(self):
-            return f"Вы сели на {self.__class__.__name__}"
-    class CardboardChair(AbstractChair):
-        def __init__(self,legs_count):
-            self.legs_count = legs_count
-        def has_legs(self):
-            return self.legs_count > 0
-        def sit_on(self):
-            return f"Вы сели на {self.__class__.__name__}"
-
-
-    def create_table(self, legs_count):
-        table = CardoardFurnitureFactory.CardboardTable(legs_count)
-        return table
-
-    def create_chair(self,legs_count):
-        chair = CardoardFurnitureFactory.CardboardChair(legs_count)
-        return chair
-
-    def create_sofa(self,legs_count):
-        sofa = CardoardFurnitureFactory.CardboardSofa(legs_count)
-        return sofa
-
-factory = CardoardFurnitureFactory()
-table = factory.create_table(3)
-chair = factory.create_chair((4))
-print(chair.sit_on())
