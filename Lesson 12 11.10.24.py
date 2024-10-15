@@ -99,5 +99,7 @@ sys является встроенным модулем, который пре�
 # print(f(10_000))
 
 
-import sys
-print(sys.getdefaultencoding())
+# import sys
+# print(sys.getdefaultencoding())
+
+
