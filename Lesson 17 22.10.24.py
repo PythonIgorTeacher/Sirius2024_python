@@ -1,6 +1,5 @@
 #Вопрос - GIL по времени проигрыш
 #Вопрос - как остановить зависший поток.
-#Убрать штрафы за 5 работу в мудл.
 #
 # import threading
 # import time
@@ -52,24 +51,25 @@
 # print('готово')
 
 #
-# from threading import Thread
-# import time
-#
-# class MyCustomThread(Thread):
-#     def __init__(self, work_time):
-#         super().__init__()
-#         self.daemon = False     #тут могут быть ваши параметры потока
-#         self.work_time = work_time
-#
-#     def run(self):
-#         start_time = time.time() #время начала работы
-#         while time.time() - start_time < self.work_time:
-#             print('Поток работает, осталось времени:',self.work_time - (time.time()-start_time) )
-#             time.sleep(0.5)
-#
-# t = MyCustomThread(5)
-# t.start()
+from threading import Thread
+import time
+
+class MyCustomThread(Thread):
+    def __init__(self, work_time):
+        super().__init__()
+        self.daemon = False     #тут могут быть ваши параметры потока
+        self.work_time = work_time
+
+    def run(self):
+        start_time = time.time() #время начала работы
+        while time.time() - start_time < self.work_time:
+            print('Поток работает, осталось времени:',self.work_time - (time.time()-start_time) )
+            time.sleep(0.5)
+
+t = MyCustomThread(5)
+t.start()
 
 import sys
 print(type(sys.version_info[1]) )
 print(sys.argv[0])
+
