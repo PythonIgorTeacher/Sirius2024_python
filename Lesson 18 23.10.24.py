@@ -111,38 +111,63 @@
 
 
 
+# import threading
+#
+# lock = threading.Lock()
+# f = open('threading.txt','w') #чтобы обнлуить файлик
+# f.close()
+#
+#
+# class Writer:
+#     def __init__(self):
+#         self.lock = threading.Lock()
+#     def write(self, filename = 'threading.txt',value='' ):
+#         with open(filename,'a') as f:
+#             f.write(value+'\n')
+#
+# def thread_func(w:Writer):
+#     thread_name = threading.current_thread().name
+#     w.lock.acquire()
+#     for i in range(10):
+#         w.write(value=f'{thread_name}')
+#     w.lock.release()
+#
+# w = Writer()
+# threads = [threading.Thread(target = thread_func,args=(w, )) for _ in range(10)]
+# [t.start() for t in threads]
+# [t.join() for t in threads]
+
+
+
 import threading
 
+l = threading.Lock()
+print('вызов 1')
+l.acquire()             #1 -->0
+try:
+    print('Мои дела')
+    int('буквы') #ОШИБКА! РЕЛИЗ НЕ СЛУЧИТСЯ
+    l.release()
+except:
+    print('ошибка!')
+
+print('вызов 2')
+l.acquire()              #уже 0, ниже сделать нельзя, будет зависать
+print('вызов 3')
+
 lock = threading.Lock()
-f = open('threading.txt','w') #чтобы обнлуить файлик
-f.close()
+with lock:
+    #наши действия
+    pass
+#самый безопасный вариант
+try:
+    #наши действия
+    pass
+except:
+    pass
+finally:
+    lock.release()
 
 
-class Writer:
-    def __init__(self):
-        self.lock = threading.Lock()
-    def write(self, filename = 'threading.txt',value='' ):
-        with open(filename,'a') as f:
-            f.write(value+'\n')
-
-def thread_func(w:Writer):
-    thread_name = threading.current_thread().name
-    w.lock.acquire()
-    for i in range(10):
-        w.write(value=f'{thread_name}')
-    w.lock.release()
-
-def thread_func(w: Writer):
-    thread_name = threading.current_thread().name
-    w.lock.acquire()
-    for i in range(10):
-        w.write(value=f'{thread_name}')
-    w.lock.release()
-
-w = Writer()
-threads = [threading.Thread(target = thread_func,args=(w, )) for _ in range(10)]
-[t.start() for t in threads]
-[t.join() for t in threads]
-
-
-
+#тормоз GIL:
+#https://blog.marzeta.pl/deep-dive-into-pythons-gil-understanding-its-impact-on-multi-threading/
