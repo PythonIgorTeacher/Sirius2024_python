@@ -62,41 +62,71 @@
 #     print('Готово')
 
 
-#Пример запуска мьютекса
+# #Пример запуска мьютекса
+# import multiprocessing as mp
+# from time import sleep
+# def get_data(connection,lock):
+#     lock.acquire()
+#     l = [1,2,3]
+#     sleep(5)
+#     connection.send(l)
+#     connection.close()
+#     lock.release()
+#
+# if __name__ == '__main__':
+#     lock = mp.Lock()
+#     parent_conn, child_conn = mp.Pipe() #родитель - получает, дочерний - передает
+#     process = mp.Process(target = get_data, args = (child_conn,lock))
+#     process.start()
+#
+#     print('В основной программе:', parent_conn.recv())
+#     process.join()
+#
+#     print('Готово')
+#
+# #Переменные для подпрограмм
+# import multiprocessing as mp
+#
+# def func(val, arr):
+#     val.value = 3.1415
+#     for i in range(len(arr)):
+#         arr[i] = -1 * arr[i]
+#
+# if __name__ == '__main__':
+#     num = mp.Value('d',1.0)          #переменная вещественное число - 'd'
+#     array = mp.Array('i', range(10)) #массив целых чисел с типом - 'i'
+#     p = mp.Process(target=func, args=(num,array))
+#     p.start()
+#     p.join()
+#     print(num.value)
+#     print(array[:])
+
+
+#Упражнение №1.
+
 import multiprocessing as mp
 from time import sleep
-def get_data(connection,lock):
-    lock.acquire()
-    l = [1,2,3]
-    sleep(5)
-    connection.send(l)
-    connection.close()
-    lock.release()
+def greetings(name, order):
+    for i in range(len(order)):
+        if order[i] == 0:
+            order[i] = mp.current_process().pid
+    sleep(1)
+    id_list = sorted(order)
+    #10,20,30,40,50,60,70,80
+    delay = id_list.index(mp.current_process().pid) * 0.001
+    sleep(delay)
+    print(f'Привет, {name}, я процесс {mp.current_process().pid}')
 
 if __name__ == '__main__':
-    lock = mp.Lock()
-    parent_conn, child_conn = mp.Pipe() #родитель - получает, дочерний - передает
-    process = mp.Process(target = get_data, args = (child_conn,lock))
-    process.start()
 
-    print('В основной программе:', parent_conn.recv())
-    process.join()
 
-    print('Готово')
-
-#Переменные для подпрограмм
-import multiprocessing as mp
-
-def func(val, arr):
-    val.value = 3.1415
-    for i in range(len(arr)):
-        arr[i] = -1 * arr[i]
-
-if __name__ == '__main__':
-    num = mp.Value('d',1.0)          #переменная вещественное число - 'd'
-    array = mp.Array('i', range(10)) #массив целых чисел с типом - 'i'
-    p = mp.Process(target=func, args=(num,array))
-    p.start()
-    p.join()
-    print(num.value)
-    print(array[:])
+    name = input('Введите имя: ')
+    n_cpu = mp.cpu_count() #Количество ядер процессора
+    print('Количество ядер:',n_cpu)
+    order = mp.Array('i',[0 for _ in range(n_cpu)])
+    for i in range(n_cpu):
+        p = mp.Process(target = greetings, args=(name, order))
+        p.start()
+    #
+    #
+    # current_process().pid
