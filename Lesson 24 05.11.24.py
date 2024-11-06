@@ -110,10 +110,12 @@ def greetings(name, order):
     for i in range(len(order)):
         if order[i] == 0:
             order[i] = mp.current_process().pid
-    sleep(1)
+            break #надо было остановить цикл после записи
+    sleep(2)
     id_list = sorted(order)
+
     #10,20,30,40,50,60,70,80
-    delay = id_list.index(mp.current_process().pid) * 0.001
+    delay = id_list.index(mp.current_process().pid) * 0.1
     sleep(delay)
     print(f'Привет, {name}, я процесс {mp.current_process().pid}')
 
@@ -124,9 +126,10 @@ if __name__ == '__main__':
     n_cpu = mp.cpu_count() #Количество ядер процессора
     print('Количество ядер:',n_cpu)
     order = mp.Array('i',[0 for _ in range(n_cpu)])
-    for i in range(n_cpu):
-        p = mp.Process(target = greetings, args=(name, order))
-        p.start()
+    procesess = [mp.Process(target = greetings, args=(name, order)) for _ in range(n_cpu)]
+    [p.start() for p in procesess]
+    [p.join() for p in procesess]
+
     #
     #
     # current_process().pid
