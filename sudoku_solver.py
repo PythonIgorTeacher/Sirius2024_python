@@ -30,7 +30,7 @@ def check(grid,row,col,num):
             return False #нашли такую цифру - так нельзя
     #проверяем - есть ли цифра num в столбце с номером col
     for y in range(9):
-        if grid[col][y] == num:
+        if grid[y][col] == num:
             return False #нашли такую цифру - так нельзя
     #проверка внутри квадрата
     start_col = col - col % 3 #координата верхнего левого угла квадрата
@@ -42,16 +42,34 @@ def check(grid,row,col,num):
     return True #если мы не нашли такую цифру в нашей карте - можно ее ставить. Это хороший ход
 
 
-def solve_sudoku(grid, row,col): #указываем частично решенную таблицу и координаты относительно которых мы продолжаем решать судоку
+def solve_sudoku(grid, row, col): #указываем частично решенную таблицу и координаты относительно которых мы продолжаем решать судоку
     #если координаты - крайний нижний угол таблицы - рекурсия останавливается, все решено
     if row == 8 and col == 8:
-        return True
-    if grid[row][col] >0: #если клетка запонлена - перепрыгиваем на следующий столбец
-        return solve_sudoku(grid,row, col+1)
+        print('Победа:')
+        print_sudoku(grid)
+        return True #найдено правильно решение
     if col == 9: #проверили всю строку, переходим на следующие
         row += 1
         col = 0
+    if grid[row][col] >0: #если клетка заполнена - перепрыгиваем на следующий столбец
+        # print('клетка заполнена',row,col)
+        return solve_sudoku(grid,row, col+1)
+
+    for num in range(1, 10): #посдтавляем цифры вместо 0
+        if check(grid,row,col,num) == True:#проверямем - можем ли поставить цифру вместо 0
+            grid[row][col] = num
+            if solve_sudoku(grid, row, col+1): #проверка на шаг вперед.
+                # print('Хороший ход',row,col)
+                return True
+        grid[row][col] = 0 #отменяем ход, переходим кследующему предположению
+    # print('ход был неправильный',row,col)
+    return False
     #прорверяем можем ли мы вставить в данной строке/Столце/квадрате число от 1 до 9
 
 grid = read_sudoku('sudoku1.txt')
+print('start:')
 print_sudoku(grid)
+print('\n\n\n')
+# print('result:')
+solve_sudoku(grid,0,0)
+# print_sudoku(grid)
