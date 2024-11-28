@@ -38,22 +38,52 @@
 #     print(html)
 
 
-#Работа с ошибками
-import urllib.request as r
-import urllib.parse as p
-import urllib.error as err
-data = {'name':'me', 'password':'123'}
-data = p.urlencode(data).encode('utf-8')
-req = r.Request('https://www.example.com/sirius')
-#отрабатываем ошибку:
-try:
-    html = r.urlopen(req).read()
-
-except err.URLError as e:
-    print(e,'\n',e.reason,'\n',e.code)
-else:
-    print('Всё хорошо, страница доступна')
-
-
+# #Работа с ошибками
+# import urllib.request as r
+# import urllib.parse as p
+# import urllib.error as err
+# data = {'name':'me', 'password':'123'}
+# data = p.urlencode(data).encode('utf-8')
+# req = r.Request('https://www.example.com/sirius')
+# #отрабатываем ошибку:
+# try:
+#     html = r.urlopen(req).read()
+#
+# except err.URLError as e:
+#     print(e,'\n',e.reason,'\n',e.code)
+# else:
+#     print('Всё хорошо, страница доступна')
 
 
+
+
+import urllib.request
+from bs4 import BeautifulSoup
+
+url = 'https://www.stihi.ru'
+req = urllib.request.Request(url) #запрос
+html = urllib.request.urlopen(req) #выполняем запрос
+html = html.read()
+#готовим парсер: features - Тип парсера
+soup = BeautifulSoup(html,'html.parser')
+#print(soup.prettify()) #красиво распечатать строку с содержимым HTML-документ
+# print(soup.get_text()) #получить весь текст со страницы
+#
+# #ищем все теги <a>, которые содержат ссылки
+# links = soup.findAll('a')
+# for link in links:
+#     print(link['href'],link.text)
+##прямой поисск по имени тега:
+title = soup.title
+print(title.name, title.string, title.parent.name)
+print(soup.p['class'])
+##подробный поиск при помщи функции find и доп. атрибутов
+# print(soup.find(id='litclubtv'))
+
+
+##Двухуровневый поиск
+body = soup.find('body') #нашли "тело" страницы
+#Нашли все картинки внутри Body
+images = body.find_all('img')
+for img in images:
+    print(img['src'])
