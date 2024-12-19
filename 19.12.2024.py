@@ -62,12 +62,12 @@ def recursive_even_list_sum(num_list):
     if len(num_list) == 1: #если остался один элемент в списке
         if num_list[0] % 2 ==0: #если единственный элемент - четный
             return num_list[0] #возвращаем его значение
-        else:
+        else:  #если нечетный
             return 0 #иначе вернем 0
     else: #если в списке больше одного элемента
         if num_list[0] % 2 == 0:
             return num_list[0] + recursive_even_list_sum(num_list[1:]) #первый элемент к сумме - остальное дальше по цепочке в работу
-        else:
+        else: #если элемент нечетный
             return recursive_even_list_sum(num_list[1:]) #игнорируем первый элемент - остальные отправляем в работу
 
 
@@ -83,3 +83,20 @@ def recursive_even_list_sum(lst):
         return first_element + recursive_even_list_sum(rest_of_list)
     else:
         return recursive_even_list_sum(rest_of_list)
+
+
+#Пример Решения задачи №3 через Match_case от Даниила
+s = input()
+if s.isdigit():
+s = int(s)
+match(s):
+    case _ if (s <= 30) :
+        print(2)
+    case _ if (31 <= s <= 60) :
+        print(3)
+    case _ if (61 <= s <= 80) :
+        print(4)
+    case _ if (81 <= s <= 100) :
+        print(5)
+else:
+    print('Недопустимое значение')
