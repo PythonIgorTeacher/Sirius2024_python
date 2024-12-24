@@ -181,3 +181,4 @@ print(sc.calculate_total)
 # print(sc.calculate_total())
 # print([id(item) for item in sc.item_list])
 print(banana)
+
